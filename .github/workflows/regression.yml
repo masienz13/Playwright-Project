@@ -1,0 +1,36 @@
+name: OrangeHRM regression
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  chromium-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: true
+      ORANGEHRM_BASE_URL: ${{ secrets.ORANGEHRM_BASE_URL }}
+      ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+      ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-allure-artifacts
+          path: |
+            allure-results/
+            allure-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
