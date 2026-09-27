@@ -9,7 +9,7 @@ Playwright + TypeScript capstone for authentication and employee CRUD.
 3. Copy `.env.example` to `.env` and set `ORANGEHRM_BASE_URL`, `ORANGEHRM_USERNAME`, and `ORANGEHRM_PASSWORD` for your OrangeHRM instance.
 4. Run `npm test`.
 
-The configured base URL should be the OrangeHRM host, for example `https://host.example`; tests navigate to `/web/index.php/auth/login`.
+The configured base URL should be the OrangeHRM demo: `(https://opensource-demo.orangehrmlive.com)`
 
 ## Tests
 
